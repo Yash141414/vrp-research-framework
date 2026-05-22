@@ -1,0 +1,50 @@
+# Copy this file to config.yaml and fill in YOUR credentials.
+# DO NOT commit config.yaml to git. Add it to .gitignore.
+
+# Choose ONE primary broker. The fetcher will use this one.
+primary_broker: kite   # options: kite, upstox, angelone
+
+kite:
+  api_key: "YOUR_KITE_API_KEY"
+  api_secret: "YOUR_KITE_API_SECRET"
+  # access_token is generated daily via login flow; fill after first login
+  access_token: ""
+
+upstox:
+  api_key: "YOUR_UPSTOX_API_KEY"
+  api_secret: "YOUR_UPSTOX_API_SECRET"
+  redirect_uri: "https://localhost"
+  access_token: ""
+
+angelone:
+  api_key: "YOUR_ANGEL_API_KEY"
+  client_code: "YOUR_CLIENT_CODE"
+  password: "YOUR_PIN"
+  totp_secret: "YOUR_TOTP_SECRET"  # for 2FA
+
+# Where to cache data
+data_dir: "./data_cache"
+
+# What to fetch
+universe:
+  spot_symbol: "NIFTY 50"
+  options_underlying: "NIFTY"
+  vix_symbol: "INDIA VIX"
+
+# Time range
+date_range:
+  start: "2022-01-01"
+  end:   "2024-12-31"
+
+# Bar resolution
+resolution: "1minute"   # also supported: 5minute, 15minute, day
+
+# NSE lot sizes per underlying. UPDATE WHEN NSE REVISES (Nifty has changed
+# several times historically). Source of truth: broker instrument master.
+lot_sizes:
+  NIFTY: 75
+
+# Liquidity filter: require >= this many contracts traded in the entry/exit
+# 1-min bar before accepting the option close. 0 disables. A defensible
+# starting value for ATM weekly Nifty is ~100; tune via health_check.py.
+min_volume_per_leg: 0

@@ -1,0 +1,13 @@
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+pyyaml>=6.0
+pyarrow>=12.0
+requests>=2.30
+
+# Broker SDKs (install only the one(s) you use)
+kiteconnect>=4.2
+# upstox-python-sdk>=2.0  # optional
+
+# Dev / tests
+pytest>=8.0
