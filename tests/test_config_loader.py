@@ -5,9 +5,7 @@ from pathlib import Path
 import yaml
 import pytest
 
-from Apology.Proj.Nifty_momentum_system.nifty_data_layer.config_loader import (
-    load_config, _parse_dotenv, ENV_OVERRIDES,
-)
+from config_loader import load_config, _parse_dotenv, ENV_OVERRIDES
 
 
 # ----- .env parsing -----

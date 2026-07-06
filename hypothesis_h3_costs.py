@@ -30,7 +30,10 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from .config_loader import load_config
+try:
+    from .config_loader import load_config
+except ImportError:
+    from config_loader import load_config  # type: ignore[no-redef]
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s [%(levelname)s] %(message)s")
@@ -151,13 +154,13 @@ def report(df: pd.DataFrame, cost_per_trade: float) -> dict:
         out[f"{label}_std"] = std
         out[f"{label}_sharpe_per_trade"] = (mean / std) if std > 0 else np.nan
         out[f"{label}_win_rate"] = (s > 0).mean()
-        # Approx annualized Sharpe assuming ~5 trades per week (one per dte 1..5)
+        # Annualized Sharpe using 252 trading days (matches H4 convention)
         out[f"{label}_sharpe_annualized"] = (
-            out[f"{label}_sharpe_per_trade"] * np.sqrt(52 * 5)
+            out[f"{label}_sharpe_per_trade"] * np.sqrt(252)
             if std > 0 else np.nan
         )
 
-        cum = s.cumsum()
+        cum = s.sort_index().cumsum()
         peak = cum.cummax()
         dd = (cum - peak)
         out[f"{label}_max_drawdown_inr"] = dd.min()

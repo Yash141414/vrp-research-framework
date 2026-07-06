@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from Apology.Proj.Nifty_momentum_system.nifty_data_layer.hypothesis_h1_vrp import realized_variance_window
+from hypothesis_h1_vrp import realized_variance_window
 
 
 def _make_constant_log_return_spot(start: str,

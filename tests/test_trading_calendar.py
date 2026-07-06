@@ -4,7 +4,7 @@ from datetime import date
 import pandas as pd
 import pytest
 
-from Apology.Proj.Nifty_momentum_system.nifty_data_layer.trading_calendar import (
+from trading_calendar import (
     trading_days_from_spot,
     prev_trading_day,
     next_trading_day,

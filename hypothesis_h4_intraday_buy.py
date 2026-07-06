@@ -39,10 +39,16 @@ import pandas as pd
 import yaml
 from scipy import stats
 
-from .config_loader import load_config
-from .data_store import DataStore
-from .trading_calendar import trading_days_from_spot
-from .hypothesis_h3_costs import round_trip_long_single_leg_cost
+try:
+    from .config_loader import load_config
+    from .data_store import DataStore
+    from .trading_calendar import trading_days_from_spot
+    from .hypothesis_h3_costs import round_trip_long_single_leg_cost
+except ImportError:
+    from config_loader import load_config  # type: ignore[no-redef]
+    from data_store import DataStore  # type: ignore[no-redef]
+    from trading_calendar import trading_days_from_spot  # type: ignore[no-redef]
+    from hypothesis_h3_costs import round_trip_long_single_leg_cost  # type: ignore[no-redef]
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s [%(levelname)s] %(message)s")

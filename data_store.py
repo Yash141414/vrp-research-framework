@@ -17,7 +17,10 @@ from typing import List, Optional
 from datetime import datetime, date
 import pandas as pd
 
-from .brokers.base import OHLCBar, OptionContract
+try:
+    from .brokers.base import OHLCBar, OptionContract
+except ImportError:
+    from brokers.base import OHLCBar, OptionContract  # type: ignore[no-redef]
 
 log = logging.getLogger(__name__)
 
@@ -38,11 +41,13 @@ def bars_to_df(bars: List[OHLCBar]) -> pd.DataFrame:
     if not bars:
         return pd.DataFrame(columns=BAR_SCHEMA.keys()).astype(BAR_SCHEMA)
     df = pd.DataFrame([b.__dict__ for b in bars])
-    # Sanity check
-    assert df["timestamp"].is_monotonic_increasing or df["timestamp"].is_unique, \
-        "Bars must be unique-timestamped or sorted ascending"
-    assert (df["high"] >= df["low"]).all(), "high < low detected — bad data"
-    assert (df["volume"] >= 0).all(), "negative volume detected"
+    # Sanity check (use explicit raises so these work under python -O)
+    if not (df["timestamp"].is_monotonic_increasing or df["timestamp"].is_unique):
+        raise ValueError("Bars must be unique-timestamped or sorted ascending")
+    if not (df["high"] >= df["low"]).all():
+        raise ValueError("high < low detected — bad data")
+    if not (df["volume"] >= 0).all():
+        raise ValueError("negative volume detected")
     return df.astype(BAR_SCHEMA, errors="ignore")
 
 

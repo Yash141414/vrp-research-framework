@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from Apology.Proj.Nifty_momentum_system.nifty_data_layer.hypothesis_h3_costs import (
+from hypothesis_h3_costs import (
     leg_cost,
     round_trip_short_straddle_cost,
     compute_net_pnl,

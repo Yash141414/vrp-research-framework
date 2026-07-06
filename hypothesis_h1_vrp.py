@@ -6,8 +6,9 @@ Tests whether a Variance Risk Premium (VRP) exists in Nifty options.
 DEFINITION:
     VRP_t = IV_t - RV_t
 where:
-    IV_t = (India VIX_t / 100)^2 * (30/365)   [implied 30-day variance]
+    IV_t = (India VIX_t / 100)^2               [annualized implied variance]
     RV_t = sum of squared 5-min log returns over next 30 cal days, annualized
+           by (365 / days) to match VIX's calendar-day convention
 
 If VRP > 0 on average AND the difference is statistically significant,
 the literature's claim is supported on YOUR data.
@@ -34,8 +35,12 @@ from pathlib import Path
 import yaml
 from scipy import stats
 
-from .config_loader import load_config
-from .data_store import DataStore
+try:
+    from .config_loader import load_config
+    from .data_store import DataStore
+except ImportError:
+    from config_loader import load_config  # type: ignore[no-redef]
+    from data_store import DataStore  # type: ignore[no-redef]
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s [%(levelname)s] %(message)s")

@@ -89,6 +89,7 @@ def step_fetch(cfg: dict, start: date, end: date, force: bool) -> None:
         start=start, end=end,
         strikes_around=int(cfg.get("strikes_around", 5)),
         resolution=cfg["resolution"],
+        spot_symbol=cfg["universe"]["spot_symbol"],
         force=force,
     )
     log.info("Step 1 complete: data cached locally.")

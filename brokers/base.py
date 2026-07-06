@@ -34,7 +34,7 @@ class OptionContract:
     expiry: date
     strike: int
     is_call: bool              # True=CE, False=PE
-    instrument_token: int      # broker-specific id
+    instrument_token: str      # broker-specific id
     tradingsymbol: str         # broker-specific symbol
 
 
@@ -75,7 +75,7 @@ class BrokerAdapter(ABC):
 
     # --- Historical bars ---
     @abstractmethod
-    def get_historical_bars(self, instrument_token: int,
+    def get_historical_bars(self, instrument_token: str,
                             from_dt: datetime, to_dt: datetime,
                             resolution: str) -> List[OHLCBar]:
         """

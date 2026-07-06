@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from Apology.Proj.Nifty_momentum_system.nifty_data_layer.hypothesis_h4_intraday_buy import (
+from hypothesis_h4_intraday_buy import (
     H4Params, evaluate_h4a, evaluate_h4b, simulate_trade,
     _nearest_weekly_expiry,
 )

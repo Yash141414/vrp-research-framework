@@ -146,7 +146,7 @@ class KiteAdapter(BrokerAdapter):
                 expiry=row["expiry"],
                 strike=int(row["strike"]),
                 is_call=(row["instrument_type"] == "CE"),
-                instrument_token=int(row["instrument_token"]),
+                instrument_token=str(row["instrument_token"]),
                 tradingsymbol=row["tradingsymbol"],
             )
             for _, row in sub.iterrows()
@@ -161,7 +161,7 @@ class KiteAdapter(BrokerAdapter):
             "day": "day",
         }[resolution]
 
-    def get_historical_bars(self, instrument_token: int,
+    def get_historical_bars(self, instrument_token: str,
                             from_dt: datetime, to_dt: datetime,
                             resolution: str) -> List[OHLCBar]:
         """
@@ -179,7 +179,7 @@ class KiteAdapter(BrokerAdapter):
             self._throttle()
             try:
                 raw = self.kite.historical_data(
-                    instrument_token=instrument_token,
+                    instrument_token=int(instrument_token),
                     from_date=cursor,
                     to_date=chunk_end,
                     interval=kite_res,
@@ -217,7 +217,7 @@ class KiteAdapter(BrokerAdapter):
             match = nse_inst[nse_inst["name"] == symbol]
         if match.empty:
             raise ValueError(f"Index {symbol} not found in NSE instruments")
-        token = int(match.iloc[0]["instrument_token"])
+        token = str(int(match.iloc[0]["instrument_token"]))
         return self.get_historical_bars(token, from_dt, to_dt, resolution)
 
     # ----- Diagnostics -----

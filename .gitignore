@@ -1,0 +1,42 @@
+# Personal change log — not for version control
+changes_made.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Secrets / config
+config.yaml
+.env
+*.env
+
+# Data files (large, broker-fetched)
+data/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

@@ -137,6 +137,7 @@ def fetch_spot_and_vix(adapter: BrokerAdapter, store: DataStore,
 def fetch_options(adapter: BrokerAdapter, store: DataStore,
                   underlying: str, start: date, end: date,
                   strikes_around: int, resolution: str,
+                  spot_symbol: str = "NIFTY 50",
                   force: bool = False) -> None:
     """
     For every expiry in the range, determine the spot price near that
@@ -144,7 +145,7 @@ def fetch_options(adapter: BrokerAdapter, store: DataStore,
 
     We need spot already cached before this runs.
     """
-    spot_df = store.load_spot("NIFTY 50")
+    spot_df = store.load_spot(spot_symbol)
     if spot_df.empty:
         raise RuntimeError("Spot data not cached. Run fetch_spot_and_vix first.")
     spot_df = spot_df.set_index("timestamp").sort_index()
@@ -227,6 +228,7 @@ def main():
             start=start_d, end=end_d,
             strikes_around=args.strikes_around,
             resolution=cfg["resolution"],
+            spot_symbol=cfg["universe"]["spot_symbol"],
             force=args.force,
         )
 

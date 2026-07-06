@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 import pytest
 
-from Apology.Proj.Nifty_momentum_system.nifty_data_layer.risk_gate import RiskGate, RiskConfig, RiskState
+from risk_gate import RiskGate, RiskConfig, RiskState
 
 
 def _fresh_gate(tmp_path: Path, **config_overrides) -> RiskGate:
